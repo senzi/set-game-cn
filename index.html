@@ -27,7 +27,7 @@
         <article class="mode-card featured">
           <div><span class="index">01</span><span class="tag">经典 / 12 张</span></div>
           <h2>改进版 SET</h2>
-          <p>每一局面都保证有解。找到三张牌，让四种属性各自全同或全异。</p>
+          <p>每一局面都保证有解。逐项检查数量、颜色、形状和填充：每一项都必须三张相同或三张全不同。</p>
           <div class="mode-actions">
             <button class="primary" data-start="set">开始游戏 <span>↗</span></button>
             <button class="text-btn" data-start="set-hard">困难模式</button>
@@ -85,11 +85,13 @@
         <h1 id="tutorial-title">一眼看懂<br><em>SET。</em></h1>
         <div class="rule-grid">
           <article data-rule="base"><span>01</span><h2>四种属性</h2><p>每张牌由数量、颜色、形状、填充组成，每种属性各有三个取值。</p><div id="rule-cards-a" class="mini-cards"></div></article>
-          <article data-rule="base"><span>02</span><h2>全同或全异</h2><p>三张牌构成 SET，当且仅当每一种属性在三张牌中都「完全相同」或「各不相同」。不能两同一异。</p><div id="rule-cards-b" class="mini-cards"></div></article>
-          <article data-rule="planet" class="rule-example"><span>03</span><h2>行星</h2><p>A、B 所缺的 SET 补牌，与 C、D 所缺的补牌相同（都是 X），因此 A/B/C/D 四张构成行星。</p><div id="planet-example" class="example-cards planet-example"></div><button class="text-btn refresh-example" data-action="refresh-planet-example">换一个例子</button></article>
-          <article data-rule="planet" class="rule-example"><span>04</span><h2>彗星</h2><p>九张牌的每种属性总和均为 3 的倍数，就是彗星。下面每次都会生成一组真实可用的彗星。</p><div id="comet-example" class="example-cards comet-example"></div><button class="text-btn refresh-example" data-action="refresh-comet-example">刷新彗星</button></article>
-          <article data-rule="improved"><span>03</span><h2>为什么是改进版？</h2><p>普通 SET 的 12 张牌可能无解；这里的补牌算法会预先检查，保证牌桌始终至少存在一组 SET。</p></article>
-          <article data-rule="improved"><span>04</span><h2>完成牌堆</h2><p>找对后取走三张并补牌，直到牌堆耗尽。普通模式可使用提示，困难模式选错即重新开始。</p></article>
+          <article data-rule="base"><span>02</span><h2>逐项独立检查</h2><p>分别检查数量、颜色、形状和填充。每一项都可以独立选择「三张相同」或「三张全不同」；唯一不允许的是「两张相同、一张不同」。</p><p>例如下方三张牌：数量和填充相同，颜色和形状全不同，所以它们仍然是 SET。</p><div id="rule-cards-b" class="mini-cards"></div></article>
+          <article data-rule="base"><span>03</span><h2>另一组正确示例</h2><p>下方三张牌的数量全不同；颜色、形状和填充都相同。每一项仍然各自通过检查，所以也是 SET。</p><div id="rule-cards-c" class="mini-cards"></div></article>
+          <article data-rule="base"><span>04</span><h2>一个反例</h2><p>下方三张牌不是 SET：数量出现「两个 1、一个 2」，形状也出现「两个椭圆、一个菱形」。任何一项两同一异，整组就失败。</p><div id="rule-cards-d" class="mini-cards invalid-example"></div></article>
+          <article data-rule="planet" class="rule-example"><span>05</span><h2>行星</h2><p>A、B 所缺的 SET 补牌，与 C、D 所缺的补牌相同（都是 X），因此 A/B/C/D 四张构成行星。</p><div id="planet-example" class="example-cards planet-example"></div><button class="text-btn refresh-example" data-action="refresh-planet-example">换一个例子</button></article>
+          <article data-rule="planet" class="rule-example"><span>06</span><h2>彗星</h2><p>九张牌的每种属性总和均为 3 的倍数，就是彗星。下面每次都会生成一组真实可用的彗星。</p><div id="comet-example" class="example-cards comet-example"></div><button class="text-btn refresh-example" data-action="refresh-comet-example">刷新彗星</button></article>
+          <article data-rule="improved"><span>05</span><h2>为什么是改进版？</h2><p>普通 SET 的 12 张牌可能无解；这里的补牌算法会预先检查，保证牌桌始终至少存在一组 SET。</p></article>
+          <article data-rule="improved"><span>06</span><h2>完成牌堆</h2><p>找对后取走三张并补牌，直到牌堆耗尽。普通模式可使用提示，困难模式选错即重新开始。</p></article>
         </div>
         <div class="shortcut-note"><span>快捷键</span><p>SET：<kbd>1 2 3</kbd> / <kbd>Q W E</kbd> / <kbd>A S D</kbd> / <kbd>Z X C</kbd><br>行星：<kbd>Q W E</kbd> / <kbd>A S D</kbd> / <kbd>Z X C</kbd></p></div>
         <button id="tutorial-start" class="primary wide" data-start="set">明白了，开始改进版 SET</button>

@@ -130,7 +130,7 @@ function saveResultImage(r=state.lastResult){
   canvas.toBlob(blob=>{if(!blob)return;const url=URL.createObjectURL(blob),a=document.createElement('a');a.download=filename;a.href=url;a.hidden=true;document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000)},'image/png')
 }
 
-function renderRuleCards(){const data=[['0000','1111','2222'],['0002','1112','2222']];['#rule-cards-a','#rule-cards-b'].forEach((s,j)=>{const el=$(s);if(!el)return;el.innerHTML='';data[j].forEach((c,i)=>el.append(makeCard(c,i,'')))})}
+function renderRuleCards(){const data=[['0000','1111','2222'],['1211','1121','1001'],['0012','1012','2012'],['0000','0010','1000']];['#rule-cards-a','#rule-cards-b','#rule-cards-c','#rule-cards-d'].forEach((s,j)=>{const el=$(s);if(!el)return;el.innerHTML='';data[j].forEach((c,i)=>el.append(makeCard(c,i,'')))})}
 function createPlanetExample(){
   const deck=shuffle(allCards());for(const a of deck)for(const b of deck){if(a===b)continue;const x=completion(a,b);for(const c of deck){if([a,b,x].includes(c))continue;const d=completion(c,x);if(![a,b,c,x].includes(d)){const four=[a,b,c,d];if(strictPlanet(four))return[...four,x]}}}return null
 }
