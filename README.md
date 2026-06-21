@@ -1,2 +1,93 @@
-# set-game-cn
-A Chinese-localized web clone of the classic Set card game with SVG-rendered cards, featuring both the "Improved Set" (12-card, always-solvable) and "Set, Planet, Comet" (9-card, triple-combo) variants.
+# SET · 行星 · 彗星
+
+经典 SET 卡牌游戏的中文网页版本，包含保证有解的「改进版 SET」以及进阶的「SET、行星与彗星」玩法。所有卡牌均由程序动态生成 SVG，无需图片素材或第三方运行时。
+
+在线体验：[set.closeai.moe](https://set.closeai.moe)
+
+## 游戏模式
+
+### 改进版 SET
+
+牌桌上展示 12 张牌。选择三张牌，当数量、颜色、形状和填充这四种属性分别满足「全相同」或「全不同」时，即构成一组 SET。
+
+与传统玩法不同，补牌算法会检查当前牌桌，保证每个 12 张牌的局面至少存在一组 SET。
+
+### SET、行星与彗星
+
+牌桌上展示 9 张牌，可以寻找三种组合：
+
+- SET：三张牌，每种属性全同或全异。
+- 行星：四张牌可以分成两对，两对所缺的 SET 补牌相同。
+- 彗星：九张牌的每种属性总和均为 3 的倍数。
+
+如果四张行星中已经包含 SET，会优先取走其中的三张 SET。
+
+### 行星练习
+
+每题展示四张牌，判断它们是否构成不包含 SET 的行星。练习模式记录连续答对数、用时和浏览器本地最佳成绩。
+
+## 功能
+
+- 中文规则教程与动态组合示例
+- 普通模式与答错即重开的困难模式
+- 提示、计时、键盘和触屏操作
+- 色觉友好配色
+- 游戏成绩、练习纪录和本地历史记录
+- 正方形成绩海报，可在结算页或历史记录中重新生成
+- 桌面端和移动端响应式布局
+- 81 张卡牌的普通与色觉 SVG 模板预生成
+- 纯 HTML、CSS、JavaScript，可离线运行
+
+## 快捷键
+
+改进版 SET：
+
+```text
+1 2 3
+Q W E
+A S D
+Z X C
+```
+
+行星与彗星：
+
+```text
+Q W E
+A S D
+Z X C
+```
+
+- `H`：提示
+- `R`：重新发牌
+- `Space`：判定彗星
+- `Esc`：结束本局
+
+## 本地运行
+
+项目没有构建步骤，使用任意静态文件服务器即可：
+
+```bash
+python3 -m http.server 4173
+```
+
+然后访问 [http://localhost:4173](http://localhost:4173)。
+
+## 数据与隐私
+
+游戏历史、困难模式成绩和行星练习纪录仅保存在当前浏览器的 `localStorage` 中，不会上传到服务器。清除浏览器站点数据或在历史记录界面选择清空，会删除这些纪录。
+
+## 项目结构
+
+```text
+index.html   页面结构
+styles.css  视觉样式与响应式布局
+app.js      卡牌生成、游戏规则、成绩与交互逻辑
+```
+
+## 致谢
+
+玩法与原版网页设计参考自 [uiqoo 的 Set, Planet, Comet](https://uiqoo.kr/articles/setplanetcomet)。行星与彗星规则源自 Mark Baker 等人的相关数学游戏研究。
+
+## 许可证
+
+本项目使用 [MIT License](LICENSE)。

@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#2b2622">
+  <title>SET / 行星 / 彗星</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main id="app">
+    <section id="home" class="screen home-screen active">
+      <header class="brandbar">
+        <a class="wordmark" href="#" aria-label="返回首页">SET<span>³</span></a>
+        <button class="color-toggle" data-action="color" aria-label="切换色觉友好模式" title="将绿色与紫色替换为黄色与蓝色">
+          <svg viewBox="0 0 24 24"><circle cx="8" cy="12" r="5"/><circle cx="16" cy="12" r="5"/></svg>
+          <span>色觉模式</span><i id="color-state">关</i>
+        </button>
+      </header>
+      <div class="hero">
+        <p class="eyebrow">观察 · 归纳 · 发现</p>
+        <h1>万物皆有<br><em>规律。</em></h1>
+        <p class="lede">从 81 张独一无二的牌中，寻找属性间精确而漂亮的联系。</p>
+      </div>
+      <div class="mode-list">
+        <article class="mode-card featured">
+          <div><span class="index">01</span><span class="tag">经典 / 12 张</span></div>
+          <h2>改进版 SET</h2>
+          <p>每一局面都保证有解。找到三张牌，让四种属性各自全同或全异。</p>
+          <div class="mode-actions">
+            <button class="primary" data-start="set">开始游戏 <span>↗</span></button>
+            <button class="text-btn" data-start="set-hard">困难模式</button>
+            <button class="text-btn" data-action="tutorial-set">玩法</button>
+          </div>
+        </article>
+        <article class="mode-card">
+          <div><span class="index">02</span><span class="tag">进阶 / 9 张</span></div>
+          <h2>行星与彗星</h2>
+          <p>三张是 SET，四张成行星，九张化彗星。一张牌桌，三重结构。</p>
+          <div class="mode-actions">
+            <button class="primary" data-start="planet">开始游戏 <span>↗</span></button>
+            <button class="text-btn" data-start="planet-hard">困难模式</button>
+            <button class="text-btn" data-action="tutorial-planet">玩法</button>
+          </div>
+        </article>
+      </div>
+      <footer class="home-footer">
+        <button class="text-btn" data-action="practice">行星练习</button>
+        <button class="text-btn" data-action="history">历史成绩 <b id="history-count">0</b></button>
+        <nav class="footer-links" aria-label="项目信息">
+          <a href="https://github.com/senzi/set-game-cn" target="_blank" rel="noopener noreferrer">GitHub ↗</a><i>|</i>
+          <a href="LICENSE" target="_blank" rel="noopener noreferrer">MIT</a><i>|</i><span>Vibe Coding</span><i>|</i>
+          <a href="https://uiqoo.kr/articles/setplanetcomet" target="_blank" rel="noopener noreferrer">原版游戏 ↗</a>
+        </nav>
+      </footer>
+    </section>
+
+    <section id="game" class="screen game-screen">
+      <header class="game-header">
+        <button class="icon-btn back" data-action="home" aria-label="返回首页">←</button>
+        <div class="game-name"><span id="mode-kicker">IMPROVED</span><strong id="mode-title">SET</strong></div>
+        <div class="stat remaining-stat"><small>剩余</small><strong id="remaining">81</strong></div>
+        <div class="stat timer-stat"><small>用时</small><strong id="timer">0:00</strong></div>
+      </header>
+      <div class="game-stage">
+        <div class="status-row">
+          <p id="status" aria-live="polite">找出一组 SET</p>
+          <span id="hard-badge" class="badge">困难模式</span>
+        </div>
+        <div id="board" class="board" aria-label="游戏牌桌"></div>
+        <div class="controls">
+          <button data-action="hint"><span id="hint-label">提示</span><kbd>H</kbd></button>
+          <button data-action="reset"><span>重新发牌</span><kbd>R</kbd></button>
+          <button id="comet-btn" class="comet-btn" data-action="comet"><span>判定彗星</span><kbd>Space</kbd></button>
+          <button class="end-btn" data-action="end"><span>结束本局</span><kbd>Esc</kbd></button>
+        </div>
+      </div>
+    </section>
+
+    <section id="info" class="screen info-screen">
+      <header class="brandbar"><button class="icon-btn back" data-action="home">←</button><span id="info-count">规则</span></header>
+      <div class="info-wrap">
+        <p id="tutorial-kicker" class="eyebrow">HOW TO PLAY · IMPROVED SET</p>
+        <h1 id="tutorial-title">一眼看懂<br><em>SET。</em></h1>
+        <div class="rule-grid">
+          <article data-rule="base"><span>01</span><h2>四种属性</h2><p>每张牌由数量、颜色、形状、填充组成，每种属性各有三个取值。</p><div id="rule-cards-a" class="mini-cards"></div></article>
+          <article data-rule="base"><span>02</span><h2>全同或全异</h2><p>三张牌构成 SET，当且仅当每一种属性在三张牌中都「完全相同」或「各不相同」。不能两同一异。</p><div id="rule-cards-b" class="mini-cards"></div></article>
+          <article data-rule="planet" class="rule-example"><span>03</span><h2>行星</h2><p>A、B 所缺的 SET 补牌，与 C、D 所缺的补牌相同（都是 X），因此 A/B/C/D 四张构成行星。</p><div id="planet-example" class="example-cards planet-example"></div><button class="text-btn refresh-example" data-action="refresh-planet-example">换一个例子</button></article>
+          <article data-rule="planet" class="rule-example"><span>04</span><h2>彗星</h2><p>九张牌的每种属性总和均为 3 的倍数，就是彗星。下面每次都会生成一组真实可用的彗星。</p><div id="comet-example" class="example-cards comet-example"></div><button class="text-btn refresh-example" data-action="refresh-comet-example">刷新彗星</button></article>
+          <article data-rule="improved"><span>03</span><h2>为什么是改进版？</h2><p>普通 SET 的 12 张牌可能无解；这里的补牌算法会预先检查，保证牌桌始终至少存在一组 SET。</p></article>
+          <article data-rule="improved"><span>04</span><h2>完成牌堆</h2><p>找对后取走三张并补牌，直到牌堆耗尽。普通模式可使用提示，困难模式选错即重新开始。</p></article>
+        </div>
+        <div class="shortcut-note"><span>快捷键</span><p>SET：<kbd>1 2 3</kbd> / <kbd>Q W E</kbd> / <kbd>A S D</kbd> / <kbd>Z X C</kbd><br>行星：<kbd>Q W E</kbd> / <kbd>A S D</kbd> / <kbd>Z X C</kbd></p></div>
+        <button id="tutorial-start" class="primary wide" data-start="set">明白了，开始改进版 SET</button>
+      </div>
+    </section>
+
+    <section id="practice" class="screen practice-screen">
+      <header class="game-header"><button class="icon-btn back" data-action="home">←</button><div class="game-name"><span>TRAINING</span><strong>是行星吗？</strong></div><div class="stat"><small>连续答对</small><strong id="streak">0</strong></div><div class="stat"><small>本轮用时</small><strong id="practice-time">0:00</strong></div></header>
+      <div class="practice-wrap">
+        <div class="practice-best"><span>个人最佳</span><strong id="practice-best">尚无记录</strong></div>
+        <p id="practice-status">观察这四张牌</p>
+        <div id="practice-board" class="practice-board"></div>
+        <div class="answer-row"><button class="primary" data-answer="yes" disabled>是行星</button><button class="secondary" data-answer="no" disabled>不是</button></div>
+      </div>
+    </section>
+
+    <div id="confirm-bar" class="confirm-bar" role="alert" aria-live="assertive">
+      <span id="confirm-text">操作将清空本局进度</span>
+      <div><button class="secondary" data-action="cancel-confirm">取消</button><button class="danger" data-action="confirm">确认</button></div>
+    </div>
+
+    <div id="result-modal" class="modal" role="dialog" aria-modal="true" aria-labelledby="result-title">
+      <div class="modal-card result-card">
+        <button class="modal-close" data-action="close-result" aria-label="关闭">×</button>
+        <p class="eyebrow">GAME REPORT</p><h2 id="result-title">本局完成</h2>
+        <div class="result-score"><strong id="result-time">0:00</strong><span>本局用时</span></div>
+        <div class="result-meta"><span id="result-mode">改进版 SET</span><span id="result-hints">0 次提示</span></div>
+        <div id="result-details" class="result-details"></div>
+        <div class="modal-actions"><button class="primary" data-action="save-image">保存成绩图</button><button class="secondary" data-action="replay">再来一局</button><button class="text-btn" data-action="result-home">返回首页</button></div>
+      </div>
+    </div>
+
+    <div id="history-modal" class="modal" role="dialog" aria-modal="true" aria-labelledby="history-title">
+      <div class="modal-card history-card">
+        <button class="modal-close" data-action="close-history" aria-label="关闭">×</button>
+        <p class="eyebrow">LOCAL RECORDS</p><h2 id="history-title">历史成绩</h2>
+        <p class="storage-note">仅保存在当前浏览器中</p><div id="history-list" class="history-list"></div>
+        <button class="text-btn danger-text" data-action="clear-history">清空历史记录</button>
+      </div>
+    </div>
+  </main>
+  <script src="app.js"></script>
+</body>
+</html>
